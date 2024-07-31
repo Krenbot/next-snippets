@@ -8,7 +8,7 @@ interface SnippetShowPageProps {
 }
 
 export default async function SnippetShowPage(props: SnippetShowPageProps) {
-  //Loading timeout debug
+  // Loading timeout debug
   // await new Promise((r) => setTimeout(r, 2000));
 
   const snippet = await db.snippet.findFirst({

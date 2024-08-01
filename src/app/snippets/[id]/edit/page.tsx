@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { db } from '@/db';
 import { notFound } from 'next/navigation';
+import SnippetEditForm from '@/components/snippet-edit-form';
 
 interface SnippetEditPageProps {
   params: {
@@ -29,9 +30,7 @@ export default async function SnippetEditPage(props: SnippetEditPageProps) {
         </Link>
       </div>
       <div>
-        Editing snippet with title:&nbsp;
-        <br />
-        {<span className="uppercase font-bold">{snippet.title}</span>}
+        <SnippetEditForm snippet={snippet} />
       </div>
     </>
   );

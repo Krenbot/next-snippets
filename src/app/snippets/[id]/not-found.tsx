@@ -1,9 +1,7 @@
 export default function SnippetNotFound() {
   return (
-    <div>
-      <h1 className="text-xl bold">
-        Sorry, but we couldnt find that particular snippet
-      </h1>
-    </div>
+    <h1 className="text-xl bold">
+      Sorry, but we couldn&apos;t find the page you were looking for.
+    </h1>
   );
 }

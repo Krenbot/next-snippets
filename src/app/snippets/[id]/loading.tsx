@@ -1,3 +1,3 @@
-export default function SnippetLoadingPage() {
+export default async function SnippetShowLoadingPage() {
   return <div>Loading...</div>;
 }

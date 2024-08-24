@@ -1,44 +1,37 @@
-'use client';
+import Link from 'next/link';
+import { db } from '@/db';
+import { notFound } from 'next/navigation';
+import SnippetEditForm from '@/components/snippet-edit-form';
 
-import type { Snippet } from '@prisma/client';
-import { Editor } from '@monaco-editor/react';
-import { useState } from 'react';
-
-//Importing server actions
-import * as actions from '@/actions';
-
-interface SnippetEditFormProps {
-  snippet: Snippet;
-}
-
-export default function SnippetEditForm({ snippet }: SnippetEditFormProps) {
-  const [code, setCode] = useState(snippet.code);
-
-  const handleEditorChange = (value: string = '') => {
-    setCode(value);
+interface SnippetEditPageProps {
+  params: {
+    id: string;
   };
+}
+export default async function SnippetEditPage(props: SnippetEditPageProps) {
+  //Prisma expects numbers instead of inherent strings from params
+  const id = parseInt(props.params.id);
 
-  const editSnippetAction = actions.editSnippet.bind(null, snippet.id, code);
+  //Fetch current snippet
+  const snippet = await db.snippet.findFirst({
+    where: { id },
+  });
+
+  //handle snippet not found
+  if (!snippet) {
+    return notFound();
+  }
 
   return (
     <>
-      {/* Add additional text stylings for title */}
-      Client component has snippet with title:
-      <br />
-      {snippet.title}
-      <Editor
-        height="40vh"
-        theme="vs-dark"
-        language="javascript"
-        defaultValue={snippet.code}
-        options={{ minimap: { enabled: false } }}
-        onChange={handleEditorChange}
-      />
-      <form action={editSnippetAction}>
-        <button type="submit" className="p-2 border rounded">
-          Save
-        </button>
-      </form>
+      <div>
+        <Link className="text-xl font-bold" href={`/`}>
+          Home
+        </Link>
+      </div>
+      <div>
+        <SnippetEditForm snippet={snippet} />
+      </div>
     </>
   );
 }
